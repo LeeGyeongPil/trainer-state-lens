@@ -3,6 +3,12 @@
 All notable changes to this project are documented here.
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and the project uses [Semantic Versioning](https://semver.org/).
 
+## [0.1.3] - 2026-11-13
+
+### Fixed
+
+- Korean Markdown export: the severity column and the status line now use the same Korean labels as the screen badges, with the machine value in parentheses (for example `주의 (warn)`). English Markdown and JSON output are unchanged.
+
 ## [0.1.2] - 2026-11-13
 
 ### Security

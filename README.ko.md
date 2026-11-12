@@ -104,7 +104,18 @@ Markdown 은 실행마다 표 하나입니다. 발췌(스냅숏 테스트 `tests
 | warn | overfit.eval_rise | 30 | evalMinStep=30; evalMin=3.11; evalLast=3.47; risePct=11.5; ... | Eval loss was lowest at step 30 (3.11) and rose 11.5% to 3.47. ... |
 ```
 
-화면 언어를 한국어로 두면 내보내는 Markdown 도 한국어입니다. JSON 은 고정 스키마 `{ version, lang, runs: [{ name, status, files, entries: { train, eval, summary }, findings: [{ rule, severity, step, evidence, message }] }] }` 이고, 같은 입력은 항상 같은 출력을 냅니다.
+화면 언어를 한국어로 두면 내보내는 Markdown 도 한국어이고, 심각도 칸은 화면 배지와 같은 말 뒤에 기계용 값을 괄호로 붙입니다(같은 스냅숏, 한국어 내보내기 발췌):
+
+```markdown
+- 상태: 주의 (warn)
+
+| 심각도 | 규칙 | Step | 근거 | 내용 |
+|---|---|---|---|---|
+| 주의 (warn) | overfit.eval_rise | 30 | evalMinStep=30; evalMin=3.11; evalLast=3.47; risePct=11.5; ... | eval 손실이 step 30 에서 최저(3.11)였고 이후 11.5% 올라 마지막 값은 3.47 입니다. ... |
+| 참고 (info) | overfit.best_checkpoint_missing | 30 | bestStep=30; saveSteps=60 | 최적 eval step 30 의 체크포인트가 저장되지 않았고(save_steps 60) ... |
+```
+
+영어 내보내기와 JSON 은 그대로입니다. JSON 은 고정 스키마 `{ version, lang, runs: [{ name, status, files, entries: { train, eval, summary }, findings: [{ rule, severity, step, evidence, message, action }] }] }` 이고, 같은 입력은 항상 같은 출력을 냅니다.
 
 ## 진단 결과 읽는 법
 
@@ -216,7 +227,7 @@ flowchart LR
 
 ```bash
 npm install
-npm test            # vitest, 13개 파일, 107개 테스트
+npm test            # vitest, 14개 파일, 115개 테스트
 npm run typecheck   # tsc (테스트 포함)
 npm run build       # tsc -b && vite build, 결과는 dist/
 npm run lint        # oxlint

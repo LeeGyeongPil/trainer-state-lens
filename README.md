@@ -104,7 +104,18 @@ The Markdown has one table per run. An excerpt (from the snapshot test `tests/__
 | warn | overfit.eval_rise | 30 | evalMinStep=30; evalMin=3.11; evalLast=3.47; risePct=11.5; ... | Eval loss was lowest at step 30 (3.11) and rose 11.5% to 3.47. ... |
 ```
 
-JSON uses a fixed schema: `{ version, lang, runs: [{ name, status, files, entries: { train, eval, summary }, findings: [{ rule, severity, step, evidence, message }] }] }`. The same input always gives the same output.
+With the UI language set to Korean, the exported Markdown is Korean too, and the severity column and the status line use the same words as the on-screen badges, with the machine value in parentheses (same snapshot, Korean export excerpt; `주의` means "caution", `참고` means "note"):
+
+```markdown
+- 상태: 주의 (warn)
+
+| 심각도 | 규칙 | Step | 근거 | 내용 |
+|---|---|---|---|---|
+| 주의 (warn) | overfit.eval_rise | 30 | evalMinStep=30; evalMin=3.11; evalLast=3.47; risePct=11.5; ... | eval 손실이 step 30 에서 최저(3.11)였고 이후 11.5% 올라 마지막 값은 3.47 입니다. ... |
+| 참고 (info) | overfit.best_checkpoint_missing | 30 | bestStep=30; saveSteps=60 | 최적 eval step 30 의 체크포인트가 저장되지 않았고(save_steps 60) ... |
+```
+
+English and JSON output are unchanged. JSON uses a fixed schema: `{ version, lang, runs: [{ name, status, files, entries: { train, eval, summary }, findings: [{ rule, severity, step, evidence, message, action }] }] }`. The same input always gives the same output.
 
 ## Reading the findings
 
@@ -216,7 +227,7 @@ Check each project's own documentation for what it supports today.
 
 ```bash
 npm install
-npm test            # vitest, 13 files, 107 tests
+npm test            # vitest, 14 files, 115 tests
 npm run typecheck   # tsc, including tests
 npm run build       # tsc -b && vite build, output in dist/
 npm run lint        # oxlint

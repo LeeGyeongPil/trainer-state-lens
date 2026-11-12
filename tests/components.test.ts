@@ -45,5 +45,6 @@ describe('components render without a browser', () => {
     const ko = renderToString(createElement(ExportPanel, { lang: 'ko', diagnoses }))
     expect(ko).toContain('내보내기')
     expect(ko).toContain('학습 실행 진단')
+    expect(ko).toContain('주의 (warn)')
   })
 })

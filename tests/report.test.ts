@@ -55,4 +55,36 @@ describe('export (AC-8)', () => {
     const quiet = diagnoseAll(loadRuns('synthetic-flat-jitter')).map((d) => ({ ...d, findings: [] }))
     expect(toMarkdown(quiet, 'en')).toContain('No findings.')
   })
+
+  it('Korean Markdown shows Korean severity with the machine value', () => {
+    const md = toMarkdown(diagnoses, 'ko')
+    expect(md).toContain('| 주의 (warn) | overfit.eval_rise | 30 |')
+    expect(md).toContain('| 오류 (error) | nonfinite.broken_run | 7 |')
+    expect(md).toContain('| 참고 (info) |')
+    expect(md).toContain('- 상태: 주의 (warn)')
+    expect(md).toContain('- 상태: 오류 (error)')
+    expect(md).toContain('- 상태: 정상 (ok)')
+    expect(md).not.toMatch(/^\| (error|warn|info|ok) \|/m)
+    expect(md).not.toMatch(/^- 상태: (error|warn|ok)$/m)
+    expect(md).toContain('| 정상 (ok) |')
+  })
+
+  it('English Markdown keeps plain severity values', () => {
+    const md = toMarkdown(diagnoses, 'en')
+    expect(md).toContain('| warn | overfit.eval_rise | 30 |')
+    expect(md).toContain('- Status: warn')
+    expect(md).not.toContain('(warn)')
+    expect(md).not.toContain('(error)')
+  })
+
+  it('JSON keeps machine severity values in both languages', () => {
+    for (const lang of ['en', 'ko'] as const) {
+      const report = JSON.parse(toJson(diagnoses, lang)) as JsonReport
+      expect(report.version).toBe(1)
+      expect(report.runs.map((r) => r.status)).toEqual(['warn', 'error', 'ok'])
+      for (const f of report.runs.flatMap((r) => r.findings)) {
+        expect(['error', 'warn', 'info', 'ok']).toContain(f.severity)
+      }
+    }
+  })
 })

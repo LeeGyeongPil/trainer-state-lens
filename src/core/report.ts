@@ -52,13 +52,18 @@ function cell(text: string): string {
   return text.replace(/\|/g, '\\|').replace(/\r?\n/g, ' ')
 }
 
+/** Severity or status label for Markdown: Korean adds the machine value in parentheses, English stays plain. */
+function severityLabel(lang: Lang, value: 'error' | 'warn' | 'info' | 'ok'): string {
+  return lang === 'ko' ? `${t(lang, `severity.${value}`)} (${value})` : value
+}
+
 /** Markdown export: one table per run (severity, rule, step, evidence, message). Deterministic. */
 export function toMarkdown(diagnoses: readonly Diagnosis[], lang: Lang = 'en'): string {
   const lines: string[] = [`# ${t(lang, 'report.title')}`, '']
   for (const { run, findings } of diagnoses) {
     lines.push(`## ${run.name}`, '')
     lines.push(`- ${t(lang, 'report.files')}: ${run.files.join(', ')}`)
-    lines.push(`- ${t(lang, 'report.status')}: ${runStatus(findings)}`)
+    lines.push(`- ${t(lang, 'report.status')}: ${severityLabel(lang, runStatus(findings))}`)
     lines.push(`- ${t(lang, 'report.entries')}: ${run.train.length}/${run.evals.length}/${run.summary.length}`, '')
     if (findings.length === 0) {
       lines.push(t(lang, 'report.noFindings'), '')
@@ -71,7 +76,7 @@ export function toMarkdown(diagnoses: readonly Diagnosis[], lang: Lang = 'en'): 
     for (const f of findings) {
       const message = `${findingMessage(lang, f)} ${findingAction(lang, f)}`.trim()
       lines.push(
-        `| ${f.severity} | ${f.rule} | ${f.step ?? ''} | ${cell(evidenceText(f.evidence))} | ${cell(message)} |`,
+        `| ${severityLabel(lang, f.severity)} | ${f.rule} | ${f.step ?? ''} | ${cell(evidenceText(f.evidence))} | ${cell(message)} |`,
       )
     }
     lines.push('')

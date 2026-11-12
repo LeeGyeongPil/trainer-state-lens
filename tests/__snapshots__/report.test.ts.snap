@@ -49,38 +49,38 @@ exports[`export (AC-8) > Markdown matches the snapshot (Korean) 1`] = `
 ## tiny-sft.json
 
 - 파일: tiny-sft-checkpoint-60.json, tiny-sft.json
-- 상태: warn
+- 상태: 주의 (warn)
 - 항목 수(학습/평가/요약): 24/12/1
 
 | 심각도 | 규칙 | Step | 근거 | 내용 |
 |---|---|---|---|---|
-| warn | overfit.eval_rise | 30 | evalMinStep=30; evalMin=3.11; evalLast=3.47; risePct=11.5; evalPoints=12; excludedNonFinite=0; gapFirst=0.4; gapLast=2.34 | eval 손실이 step 30 에서 최저(3.11)였고 이후 11.5% 올라 마지막 값은 3.47 입니다. 학습-평가 간격: 0.4 → 2.34. 제외한 비유한 eval 값 수: 0. 조기 종료, load_best_model_at_end, 에폭 줄이기를 고려하세요. 일부러 길게 돌리는 레시피는 의도적으로 오를 수 있으니 eval 손실만 보지 말고 생성 품질을 확인하세요. |
-| info | overfit.best_checkpoint_missing | 30 | bestStep=30; saveSteps=60 | 최적 eval step 30 의 체크포인트가 저장되지 않았고(save_steps 60) best_model_checkpoint 기록도 없습니다. save_steps 를 eval_steps 의 배수로 맞추고 load_best_model_at_end 를 켜서 최적 모델을 남기세요. |
-| info | schedule.shape | 15 | shape=cosine; peakLr=0.003; peakStep=15; warmupPct=12.5; resolution=5; floorRatio=2.05e-4; lastLr=6.12e-7; fitError=0.0127 | 학습률: 코사인 감소. 워밍업 정점 0.003(step 15, 전체의 약 12.5%, 해상도 5 step), 마지막 값 6.12e-7, 바닥 비율 2.05e-4, 적합 오차 0.0127. 관찰된 값만 사용합니다. trainer_state.json 에는 warmup_steps 와 스케줄러 종류가 저장되지 않습니다. |
+| 주의 (warn) | overfit.eval_rise | 30 | evalMinStep=30; evalMin=3.11; evalLast=3.47; risePct=11.5; evalPoints=12; excludedNonFinite=0; gapFirst=0.4; gapLast=2.34 | eval 손실이 step 30 에서 최저(3.11)였고 이후 11.5% 올라 마지막 값은 3.47 입니다. 학습-평가 간격: 0.4 → 2.34. 제외한 비유한 eval 값 수: 0. 조기 종료, load_best_model_at_end, 에폭 줄이기를 고려하세요. 일부러 길게 돌리는 레시피는 의도적으로 오를 수 있으니 eval 손실만 보지 말고 생성 품질을 확인하세요. |
+| 참고 (info) | overfit.best_checkpoint_missing | 30 | bestStep=30; saveSteps=60 | 최적 eval step 30 의 체크포인트가 저장되지 않았고(save_steps 60) best_model_checkpoint 기록도 없습니다. save_steps 를 eval_steps 의 배수로 맞추고 load_best_model_at_end 를 켜서 최적 모델을 남기세요. |
+| 참고 (info) | schedule.shape | 15 | shape=cosine; peakLr=0.003; peakStep=15; warmupPct=12.5; resolution=5; floorRatio=2.05e-4; lastLr=6.12e-7; fitError=0.0127 | 학습률: 코사인 감소. 워밍업 정점 0.003(step 15, 전체의 약 12.5%, 해상도 5 step), 마지막 값 6.12e-7, 바닥 비율 2.05e-4, 적합 오차 0.0127. 관찰된 값만 사용합니다. trainer_state.json 에는 warmup_steps 와 스케줄러 종류가 저장되지 않습니다. |
 
 ## synthetic-nan-broken.json
 
 - 파일: synthetic-nan-broken.json
-- 상태: error
+- 상태: 오류 (error)
 - 항목 수(학습/평가/요약): 21/0/0
 
 | 심각도 | 규칙 | Step | 근거 | 내용 |
 |---|---|---|---|---|
-| error | nonfinite.broken_run | 7 | entries=21; firstStep=7; lastStep=147 | 고장난 실행: 연속 21개 항목(step 7 ~ 147)이 loss 0.0 이면서 grad_norm 이 유한하지 않습니다. fp16 오버플로, 손실 커널 또는 라이브러리 버전 문제가 흔한 원인입니다. bf16 사용, 학습률 낮추기, 학습 라이브러리 업데이트 후 다시 실행해 보세요. |
-| info | nonfinite.values | 7 | count=21; topLevelCount=0; firstStep=7; keys=grad_norm | 유한하지 않은 값(NaN 또는 Infinity) 21개, 키 grad_norm, 처음 나온 step 7. 이 앱은 파일을 그대로 엽니다. 유한하지 않은 값은 차트와 통계에서 빼 둡니다. 엄격한 JSON 뷰어는 이런 파일을 열지 못합니다. |
-| info | schedule.shape | 21 | shape=cosine; peakLr=5.00e-5; peakStep=21; warmupPct=14.2; resolution=7; floorRatio=1.53e-4; lastLr=7.65e-9; fitError=0 | 학습률: 코사인 감소. 워밍업 정점 5.00e-5(step 21, 전체의 약 14.2%, 해상도 7 step), 마지막 값 7.65e-9, 바닥 비율 1.53e-4, 적합 오차 0. 관찰된 값만 사용합니다. trainer_state.json 에는 warmup_steps 와 스케줄러 종류가 저장되지 않습니다. |
+| 오류 (error) | nonfinite.broken_run | 7 | entries=21; firstStep=7; lastStep=147 | 고장난 실행: 연속 21개 항목(step 7 ~ 147)이 loss 0.0 이면서 grad_norm 이 유한하지 않습니다. fp16 오버플로, 손실 커널 또는 라이브러리 버전 문제가 흔한 원인입니다. bf16 사용, 학습률 낮추기, 학습 라이브러리 업데이트 후 다시 실행해 보세요. |
+| 참고 (info) | nonfinite.values | 7 | count=21; topLevelCount=0; firstStep=7; keys=grad_norm | 유한하지 않은 값(NaN 또는 Infinity) 21개, 키 grad_norm, 처음 나온 step 7. 이 앱은 파일을 그대로 엽니다. 유한하지 않은 값은 차트와 통계에서 빼 둡니다. 엄격한 JSON 뷰어는 이런 파일을 열지 못합니다. |
+| 참고 (info) | schedule.shape | 21 | shape=cosine; peakLr=5.00e-5; peakStep=21; warmupPct=14.2; resolution=7; floorRatio=1.53e-4; lastLr=7.65e-9; fitError=0 | 학습률: 코사인 감소. 워밍업 정점 5.00e-5(step 21, 전체의 약 14.2%, 해상도 7 step), 마지막 값 7.65e-9, 바닥 비율 1.53e-4, 적합 오차 0. 관찰된 값만 사용합니다. trainer_state.json 에는 warmup_steps 와 스케줄러 종류가 저장되지 않습니다. |
 
 ## tiny-dpo.json
 
 - 파일: tiny-dpo.json
-- 상태: ok
+- 상태: 정상 (ok)
 - 항목 수(학습/평가/요약): 20/4/1
 
 | 심각도 | 규칙 | Step | 근거 | 내용 |
 |---|---|---|---|---|
-| info | schedule.shape | 2 | shape=linear; peakLr=9.75e-4; peakStep=2; warmupPct=5; resolution=2; floorRatio=0.03; lastLr=2.50e-5; fitError=0.0128 | 학습률: 선형 감소. 워밍업 정점 9.75e-4(step 2, 전체의 약 5%, 해상도 2 step), 마지막 값 2.50e-5, 바닥 비율 0.03, 적합 오차 0.0128. 관찰된 값만 사용합니다. trainer_state.json 에는 warmup_steps 와 스케줄러 종류가 저장되지 않습니다. |
-| info | dpo.accuracy_saturated |  | accuracy=1 | 마지막 1/4 의 rewards/accuracies: 1. 선호 쌍이 쉽게 구분됩니다. 정확도가 포화되면 새로 배울 신호가 적습니다. 더 어려운 쌍이나 더 이른 종료가 나을 수 있습니다. |
-| ok | overfit.eval_rise |  | evalMinStep=40; evalMin=0.5; evalLast=0.5; risePct=0; evalPoints=4; excludedNonFinite=0; gapFirst=-0.05; gapLast=-0.01 | eval 손실이 최저값 0.5(step 40) 보다 0% 높은 상태로 끝납니다: 과적합 신호 없음. |
+| 참고 (info) | schedule.shape | 2 | shape=linear; peakLr=9.75e-4; peakStep=2; warmupPct=5; resolution=2; floorRatio=0.03; lastLr=2.50e-5; fitError=0.0128 | 학습률: 선형 감소. 워밍업 정점 9.75e-4(step 2, 전체의 약 5%, 해상도 2 step), 마지막 값 2.50e-5, 바닥 비율 0.03, 적합 오차 0.0128. 관찰된 값만 사용합니다. trainer_state.json 에는 warmup_steps 와 스케줄러 종류가 저장되지 않습니다. |
+| 참고 (info) | dpo.accuracy_saturated |  | accuracy=1 | 마지막 1/4 의 rewards/accuracies: 1. 선호 쌍이 쉽게 구분됩니다. 정확도가 포화되면 새로 배울 신호가 적습니다. 더 어려운 쌍이나 더 이른 종료가 나을 수 있습니다. |
+| 정상 (ok) | overfit.eval_rise |  | evalMinStep=40; evalMin=0.5; evalLast=0.5; risePct=0; evalPoints=4; excludedNonFinite=0; gapFirst=-0.05; gapLast=-0.01 | eval 손실이 최저값 0.5(step 40) 보다 0% 높은 상태로 끝납니다: 과적합 신호 없음. |
 
 _trainer-state-lens 가 만들었습니다. 주의 표시는 확인할 곳을 가리킬 뿐 판정이 아닙니다._
 "
