@@ -3,6 +3,12 @@
 All notable changes to this project are documented here.
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and the project uses [Semantic Versioning](https://semver.org/).
 
+## [0.1.2] - 2026-11-13
+
+### Security
+
+- The sample-generator helper project under `tools/make-samples` was named `py`, which collided with the unrelated vulnerable PyPI package `py` (GHSA-hj5v-574p-mj7c) in dependency scanners. It is now named `make-samples` and its `uv.lock` was regenerated. No runtime dependency changed and the web app is unaffected.
+
 ## [0.1.1] - 2026-11-13
 
 ### Fixed
