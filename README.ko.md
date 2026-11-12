@@ -25,7 +25,7 @@ cd trainer-state-lens
 npm install
 ```
 
-최소 리눅스 이미지에서는 먼저 `git`, `curl`, `ca-certificates` 를 설치하세요(예: `apt-get install -y git curl ca-certificates`). 앱 자체는 정적 파일입니다. `npm run build` 가 `dist/` 를 만들고, 아무 정적 호스팅에서나 서비스할 수 있습니다. 저장소에는 GitHub Pages 워크플로(`.github/workflows/pages.yml`)가 들어 있고, 저장소 설정에서 Pages 소스를 "GitHub Actions" 로 켜면 동작합니다.
+최소 리눅스 이미지에서는 먼저 `git`, `curl`, `ca-certificates` 를 설치하세요(예: `apt-get install -y git curl ca-certificates`). 앱 자체는 정적 파일입니다. `npm run build` 가 `dist/` 를 만들고, 아무 정적 호스팅에서나 서비스할 수 있습니다. 저장소에는 GitHub Pages 워크플로(`.github/workflows/pages.yml`)가 들어 있고, 기본은 꺼져 있습니다. `main` 에 push 할 때마다 배포하려면 저장소 설정에서 Pages 소스를 "GitHub Actions" 로 켜고 Actions 저장소 변수 `PAGES_ENABLED=true` 를 추가하세요. Actions 탭에서 손으로 실행할 수도 있습니다.
 
 ## 빠르게 시작하기
 

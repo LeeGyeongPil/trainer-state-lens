@@ -25,7 +25,7 @@ cd trainer-state-lens
 npm install
 ```
 
-On a minimal Linux image install `git`, `curl` and `ca-certificates` first (for example `apt-get install -y git curl ca-certificates`). The app itself is static files: `npm run build` produces `dist/`, which any static host can serve. The repository ships a GitHub Pages workflow (`.github/workflows/pages.yml`); it runs once you enable Pages with the "GitHub Actions" source in the repository settings.
+On a minimal Linux image install `git`, `curl` and `ca-certificates` first (for example `apt-get install -y git curl ca-certificates`). The app itself is static files: `npm run build` produces `dist/`, which any static host can serve. The repository ships a GitHub Pages workflow (`.github/workflows/pages.yml`); it is off by default. To deploy on every push to `main`, enable Pages with the "GitHub Actions" source in the repository settings and add the Actions repository variable `PAGES_ENABLED=true`; you can also start it by hand from the Actions tab.
 
 ## Quick start
 
