@@ -3,6 +3,13 @@
 All notable changes to this project are documented here.
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and the project uses [Semantic Versioning](https://semver.org/).
 
+## [0.1.1] - 2026-11-13
+
+### Fixed
+
+- The Pages deployment workflow is disabled by default: run it manually (workflow_dispatch) or set the repository variable `PAGES_ENABLED=true`. Pushes no longer fail on repositories without Pages.
+- README (both languages) describes the Pages switch accurately.
+
 ## [0.1.0] - 2026-11-13
 
 ### Added
@@ -14,4 +21,4 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and 
 - Markdown and JSON export with a fixed schema; deterministic output.
 - English and Korean UI with a language menu (`localStorage` key `trainer-state-lens.lang`, `?lang=ko|en` in the address).
 - Bundled practice samples (own runs, Hub files under MIT / Apache-2.0, synthetic files) with source labels and licenses.
-- CI (typecheck, tests, build) and a prepared GitHub Pages workflow.
+- CI (typecheck, tests, build) and a GitHub Pages workflow (disabled by default, see 0.1.1).

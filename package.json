@@ -1,6 +1,6 @@
 {
   "name": "trainer-state-lens",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Drop Hugging Face trainer_state.json files into your browser and get overlaid training curves plus rule-based diagnoses (overfit, spikes, divergence, LR schedule, DPO likelihood displacement, GRPO stall).",
   "license": "MIT",
   "private": true,
