@@ -16,3 +16,6 @@ The app and the tests use the committed files in `samples/`; nothing here runs i
   ```
 
   Training results vary slightly between library versions, so re-created files can differ from the committed ones (the rules are tested against the committed files).
+
+Requirements: [uv](https://docs.astral.sh/uv/) (`curl -LsSf https://astral.sh/uv/install.sh | sh`) and Python 3.12 or newer.
+`train_tiny.py` writes its results under `runs/` at the repository root; copy the `trainer_state.json` files you want to keep into `samples/` yourself.
