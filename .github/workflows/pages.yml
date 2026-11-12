@@ -1,5 +1,7 @@
-# Publishes the static app to GitHub Pages. Prepared only: it runs once Pages is enabled for the repository
-# (Settings > Pages > Source: GitHub Actions).
+# Publishes the static app to GitHub Pages.
+# Off by default: a repository without Pages (or a private one) would fail at configure-pages on every push.
+# To turn it on: Settings > Pages > Source: GitHub Actions, then add the repository variable
+# PAGES_ENABLED=true (Settings > Secrets and variables > Actions > Variables). Manual runs always work.
 name: pages
 on:
   push:
@@ -14,6 +16,8 @@ concurrency:
   cancel-in-progress: true
 jobs:
   deploy:
+    # Skipped (not failed) until Pages is switched on for this repository.
+    if: github.event_name == 'workflow_dispatch' || vars.PAGES_ENABLED == 'true'
     runs-on: ubuntu-latest
     environment:
       name: github-pages
