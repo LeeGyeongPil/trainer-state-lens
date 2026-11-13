@@ -50,6 +50,7 @@ npm run dev
 | 평활(EMA) | 지수 이동 평균 슬라이더. 진단은 항상 원본 값을 씁니다. |
 | 로그 y축 | 로그 스케일. |
 | 진단표 | 심각도·규칙·step·근거 수치·무엇이 보이나·무엇을 확인하나. step 링크를 누르면 그 step 으로 확대하고, step 축에서는 점선이 진단된 step 을 표시합니다. |
+| **PNG 내려받기**(차트 패널) | 지금 화면의 차트(숨긴 실행, 지표, 평활, 로그 y축, 확대 범위, 점선 표시 그대로)를 `training-curves.png` 로 저장합니다. 숨긴 선은 그림에서도 빠집니다. 실행·지표 범례가 축 이름과 함께 그림에 들어갑니다. 파일은 브라우저 안에서 만들어지고 어디로도 전송되지 않습니다. |
 | 내보내기 | Markdown 또는 JSON, 복사 또는 다운로드. |
 | 언어 | 오른쪽 위 English / 한국어 메뉴. |
 
@@ -221,13 +222,14 @@ flowchart LR
 | "Could not read <파일>" 카드(파일을 읽지 못함) | 학습 상태 파일이 아님(잘렸거나 다른 JSON) | 완전한 `trainer_state.json` 인지 확인. 다른 파일은 계속 동작 |
 | 지표 체크박스에 어떤 지표가 없음 | 파일에 그 키가 없음 | `log_history` 에 있는 키만 나옴 |
 | "Copy failed"(복사 실패) | 브라우저가 클립보드를 막음 | 내보내기 상자의 글을 선택해 직접 복사하거나 **내려받기** 사용 |
+| "PNG 를 만들지 못했습니다"(Could not create the PNG) | 브라우저가 차트 캔버스를 내보내지 못함 | 다른 브라우저를 쓰거나 차트를 화면 캡처 |
 | `dist/index.html` 을 더블클릭하면 빈 화면 | 브라우저가 `file://` 에서 모듈 스크립트를 막음 | 빌드 후 서비스: `npm run build && npm run preview` |
 
 ## 개발·기여
 
 ```bash
 npm install
-npm test            # vitest, 14개 파일, 115개 테스트
+npm test            # vitest, 15개 파일, 123개 테스트
 npm run typecheck   # tsc (테스트 포함)
 npm run build       # tsc -b && vite build, 결과는 dist/
 npm run lint        # oxlint

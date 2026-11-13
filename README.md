@@ -50,6 +50,7 @@ Or drop your own file: a `trainer_state.json` lives in the output folder of a ru
 | Smoothing (EMA) | Exponential moving average slider; diagnoses always use the raw values. |
 | Log y axis | Logarithmic scale. |
 | Diagnosis table | Severity, rule, step, evidence numbers, what we see, what to check. The step link zooms the chart to that step; dashed lines mark diagnosed steps on the step axis. |
+| **Download PNG** (chart panel) | Saves the chart as it is on screen (hidden runs, metrics, smoothing, log y, zoom, dashed markers) as `training-curves.png`. Hidden lines are left out of the picture too. The run and metric legend is drawn into the picture together with the axis names. The file is made in the browser and never sent anywhere. |
 | Export | Markdown or JSON, copy or download. |
 | Language | English or 한국어 menu in the top right. |
 
@@ -221,13 +222,14 @@ Check each project's own documentation for what it supports today.
 | "Could not read <file>" card | the file is not a trainer state (cut-off or wrong JSON) | check that it is a whole `trainer_state.json`; other files keep working |
 | A metric is missing from the checkboxes | the file has no such key | only keys in `log_history` are offered |
 | "Copy failed" | the browser blocks clipboard access | select the text in the export box and copy by hand, or use **Download** |
+| "Could not create the PNG. Try another browser or take a screenshot." | the browser could not export the chart canvas | try another browser, or take a screenshot of the chart |
 | The page is blank when opened from `dist/index.html` by double click | browsers block module scripts on `file://` | build and serve it: `npm run build && npm run preview` |
 
 ## Development
 
 ```bash
 npm install
-npm test            # vitest, 14 files, 115 tests
+npm test            # vitest, 15 files, 123 tests
 npm run typecheck   # tsc, including tests
 npm run build       # tsc -b && vite build, output in dist/
 npm run lint        # oxlint
