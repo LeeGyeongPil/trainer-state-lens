@@ -1,6 +1,7 @@
 import { createElement } from 'react'
 import { renderToString } from 'react-dom/server'
 import { describe, expect, it } from 'vitest'
+import { Chart } from '../src/components/Chart.tsx'
 import { DropZone } from '../src/components/DropZone.tsx'
 import { ExportPanel } from '../src/components/ExportPanel.tsx'
 import { Findings } from '../src/components/Findings.tsx'
@@ -46,5 +47,16 @@ describe('components render without a browser', () => {
     expect(ko).toContain('내보내기')
     expect(ko).toContain('학습 실행 진단')
     expect(ko).toContain('주의 (warn)')
+  })
+
+  it('Chart shows the PNG download button in both languages and hides it without lines', () => {
+    const runs = loadRuns('tiny-sft').map((run, colorIndex) => ({ run, colorIndex }))
+    const props = { metrics: ['loss'], xKey: 'step' as const, smoothing: 0, logY: false, markers: [], focusStep: null }
+    const en = renderToString(createElement(Chart, { lang: 'en', runs, ...props }))
+    const ko = renderToString(createElement(Chart, { lang: 'ko', runs, ...props }))
+    const none = renderToString(createElement(Chart, { lang: 'en', runs: [], ...props }))
+    expect(en).toContain('Download PNG')
+    expect(ko).toContain('PNG 내려받기')
+    expect(none).not.toContain('Download PNG')
   })
 })

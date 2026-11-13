@@ -74,6 +74,8 @@ export const en = {
   'chart.axis.left': 'left axis: {metrics}',
   'chart.axis.right': 'right axis: {metrics}',
   'chart.points':'Points drawn per line are capped at 2000; diagnoses use every point.',
+  'chart.download.png': 'Download PNG',
+  'chart.download.failed': 'Could not create the PNG. Try another browser or take a screenshot.',
 
   // --- findings table ---
   'findings.title': 'Diagnosis',

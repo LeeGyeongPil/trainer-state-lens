@@ -1,10 +1,12 @@
-import { useEffect, useMemo, useRef } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import type uPlot from 'uplot'
 import { assignScales, axisLabels, axisSize, flatRange, formatTick, maxAbsFinite } from '../core/axes.ts'
 import { buildInputs, progressOf, type XKey } from '../core/chartInputs.ts'
 import { buildChartData } from '../core/series.ts'
 import type { Run } from '../core/types.ts'
 import { t, type Lang } from '../i18n/index.ts'
+import { filterVisibleEntries } from '../core/legend.ts'
+import { composeChartCanvas, downloadCanvasPng } from './chartPng.ts'
 import { COLORS, CSS_DASHES, DASHES } from './colors.ts'
 
 interface Props {
@@ -24,6 +26,8 @@ interface Props {
 /** uPlot wrapper. uPlot touches `document` when imported, so it is loaded lazily inside the effect. */
 export function Chart({ lang, runs, metrics, xKey, smoothing, logY, markers, focusStep }: Props) {
   const host = useRef<HTMLDivElement>(null)
+  const plotRef = useRef<uPlot | null>(null)
+  const [pngFailed, setPngFailed] = useState(false)
 
   const prepared = useMemo(() => {
     const inputs = buildInputs(
@@ -127,6 +131,7 @@ export function Chart({ lang, runs, metrics, xKey, smoothing, logY, markers, foc
         },
       }
       plot = new UPlot(options, [prepared.data.x, ...prepared.data.ys] as uPlot.AlignedData, el)
+      plotRef.current = plot
       if (focusStep !== null && xKey === 'step') {
         const xs = prepared.data.x
         const span = Math.max((xs[xs.length - 1] ?? 0) - (xs[0] ?? 0), 1)
@@ -137,14 +142,41 @@ export function Chart({ lang, runs, metrics, xKey, smoothing, logY, markers, foc
 
     return () => {
       cancelled = true
+      plotRef.current = null
       window.removeEventListener('resize', onResize)
       plot?.destroy()
     }
   }, [prepared, lang, xKey, logY, markers, focusStep])
 
+  // Saves what is on screen now (hidden runs, metrics, smoothing, zoom, markers) plus a drawn legend.
+  const downloadPng = async () => {
+    const plot = plotRef.current
+    if (!plot) return
+    try {
+      const entries = prepared.inputs.map((input, i) => ({ label: input.label, color: prepared.styles[i].color, dash: prepared.styles[i].dash }))
+      const visible = filterVisibleEntries(entries, plot.series.slice(1).map((s) => s.show))
+      const canvas = composeChartCanvas(plot.ctx.canvas, visible, window.devicePixelRatio || 1)
+      setPngFailed(!(await downloadCanvasPng(canvas)))
+    } catch {
+      setPngFailed(true)
+    }
+  }
+
   return (
     <section className="panel">
       <h2>{t(lang, 'chart.title')}</h2>
+      {prepared.inputs.length > 0 ? (
+        <p>
+          <button type="button" onClick={() => void downloadPng()}>
+            {t(lang, 'chart.download.png')}
+          </button>{' '}
+          {pngFailed ? (
+            <span className="muted" role="status">
+              {t(lang, 'chart.download.failed')}
+            </span>
+          ) : null}
+        </p>
+      ) : null}
       {prepared.inputs.length === 0 ? <p className="muted">{t(lang, 'chart.empty')}</p> : null}
       <div ref={host} className="chart" />
       <p className="muted small">

@@ -24,10 +24,10 @@ describe('release alignment (AC-10)', () => {
     expect(versions[0]).toBe(pkg.version)
   })
 
-  it('CHANGELOG versions are unique, descending and keep 0.1.2, 0.1.1, 0.1.0', () => {
+  it('CHANGELOG versions are unique, descending and keep 0.1.3, 0.1.2, 0.1.1, 0.1.0', () => {
     expect(new Set(versions).size).toBe(versions.length)
     expect([...versions].sort((a, b) => cmp(b, a))).toEqual(versions)
-    for (const v of ['0.1.2', '0.1.1', '0.1.0']) expect(versions).toContain(v)
+    for (const v of ['0.1.3', '0.1.2', '0.1.1', '0.1.0']) expect(versions).toContain(v)
   })
 
   it('README mentions of a version equal the package version', () => {

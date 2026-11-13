@@ -76,6 +76,8 @@ export const ko: Record<MessageKey, string> = {
   'chart.axis.left': '왼쪽 축: {metrics}',
   'chart.axis.right': '오른쪽 축: {metrics}',
   'chart.points':'선마다 그리는 점은 최대 2000개이고, 진단은 모든 점을 사용합니다.',
+  'chart.download.png': 'PNG 내려받기',
+  'chart.download.failed': 'PNG 를 만들지 못했습니다. 다른 브라우저를 쓰거나 화면 캡처를 이용하세요.',
 
   // --- 진단표 ---
   'findings.title': '진단',
