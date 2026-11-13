@@ -3,6 +3,12 @@
 All notable changes to this project are documented here.
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and the project uses [Semantic Versioning](https://semver.org/).
 
+## [0.2.0] - 2026-11-14
+
+### Added
+
+- **Download PNG** button in the chart panel (English and Korean labels). It saves the chart as shown (hidden runs, selected metrics, x axis, smoothing, log y, zoom, dashed markers) as `training-curves.png` on a white background, with the run and metric legend drawn into the picture. The image is created in the browser; nothing is sent over the network and no dependency was added.
+
 ## [0.1.3] - 2026-11-13
 
 ### Fixed
