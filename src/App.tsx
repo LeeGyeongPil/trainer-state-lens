@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { Chart } from './components/Chart.tsx'
+import { STATE_FILE_NAME, type NamedFile } from './core/folder.ts'
 import { DropZone } from './components/DropZone.tsx'
 import { ExportPanel } from './components/ExportPanel.tsx'
 import { Findings } from './components/Findings.tsx'
@@ -22,7 +23,7 @@ interface ParseFailure {
   id: number
   file: string
   /** Reason code; the text is looked up in the chosen language when drawn. */
-  code: ParseErrorCode | 'unknown'
+  code: ParseErrorCode | 'unknown' | 'no_state_in_folder'
   /** Raw error text, shown only for unexpected failures. */
   detail: string
 }
@@ -85,8 +86,13 @@ export default function App({ initialLang }: Props) {
   }, [])
 
   const onFiles = useCallback(
-    async (picked: File[]) => {
-      for (const file of picked) addText(file.name, await file.text())
+    async (picked: NamedFile[], fromFolder = false) => {
+      if (fromFolder && picked.length === 0) {
+        const failure: ParseFailure = { id: Date.now() + Math.random(), file: STATE_FILE_NAME, code: 'no_state_in_folder', detail: '' }
+        setFailures((prev) => [...prev, failure])
+        return
+      }
+      for (const { name, file } of picked) addText(name, await file.text())
     },
     [addText],
   )
@@ -162,7 +168,7 @@ export default function App({ initialLang }: Props) {
       <DropZone
         lang={lang}
         busy={busy}
-        onFiles={(picked) => void onFiles(picked)}
+        onFiles={(picked, fromFolder) => void onFiles(picked, fromFolder)}
         onSamples={(ids) => void onSamples(ids)}
         onClear={() => {
           setFiles([])

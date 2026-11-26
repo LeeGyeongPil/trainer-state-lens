@@ -12,6 +12,7 @@ export const en = {
 
   // --- drop zone ---
   'drop.title': 'Drop trainer_state.json files here',
+  'drop.browseFolder': 'Choose folder',
   'drop.or': 'or',
   'drop.browse': 'Choose files',
   'drop.samples': 'Load sample runs',
@@ -53,6 +54,8 @@ export const en = {
   'runs.status.ok': 'ok',
   'runs.parseError': 'Could not read {file}',
   'runs.dismiss': 'Dismiss',
+  'runs.parseError.no_state_in_folder':
+    'No trainer_state.json was found in that folder. Pick the training output folder or a checkpoint-* folder.',
   'runs.parseError.invalid_json': 'The file is not valid JSON. It may be truncated: re-download it or copy it again.',
   'runs.parseError.no_log_history':
     'No "log_history" array found. Expected a Hugging Face Trainer trainer_state.json file.',

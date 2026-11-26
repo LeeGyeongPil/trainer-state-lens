@@ -1,11 +1,12 @@
 import { useRef, useState } from 'react'
 import { SAMPLES } from '../samples/index.ts'
+import { collectFromDrop, collectFromPicker, type NamedFile } from '../core/folder.ts'
 import { t, type Lang, type MessageKey } from '../i18n/index.ts'
 
 interface Props {
   lang: Lang
   busy: boolean
-  onFiles: (files: File[]) => void
+  onFiles: (files: NamedFile[], fromFolder: boolean) => void
   onSamples: (ids: string[]) => void
   onClear: () => void
 }
@@ -13,6 +14,7 @@ interface Props {
 /** Drag-and-drop area, file picker, and the practice sample list. Files never leave the browser. */
 export function DropZone({ lang, busy, onFiles, onSamples, onClear }: Props) {
   const input = useRef<HTMLInputElement>(null)
+  const folderInput = useRef<HTMLInputElement>(null)
   const [over, setOver] = useState(false)
 
   return (
@@ -27,7 +29,8 @@ export function DropZone({ lang, busy, onFiles, onSamples, onClear }: Props) {
         onDrop={(event) => {
           event.preventDefault()
           setOver(false)
-          onFiles([...event.dataTransfer.files])
+          // Folders are walked by name; only trainer_state.json files are opened.
+          void collectFromDrop(event.dataTransfer.items, [...event.dataTransfer.files]).then((r) => onFiles(r.named, r.fromFolder))
         }}
       >
         <strong>{t(lang, 'drop.title')}</strong>
@@ -35,6 +38,9 @@ export function DropZone({ lang, busy, onFiles, onSamples, onClear }: Props) {
         <div className="row">
           <button type="button" onClick={() => input.current?.click()}>
             {t(lang, 'drop.browse')}
+          </button>
+          <button type="button" onClick={() => folderInput.current?.click()}>
+            {t(lang, 'drop.browseFolder')}
           </button>
           <span className="muted">{t(lang, 'drop.or')}</span>
           <button type="button" disabled={busy} onClick={() => onSamples(SAMPLES.filter((s) => s.starter).map((s) => s.id))}>
@@ -51,7 +57,21 @@ export function DropZone({ lang, busy, onFiles, onSamples, onClear }: Props) {
           multiple
           hidden
           onChange={(event) => {
-            onFiles([...(event.target.files ?? [])])
+            onFiles(
+              [...(event.target.files ?? [])].map((file) => ({ name: file.name, file })),
+              false,
+            )
+            event.target.value = ''
+          }}
+        />
+        <input
+          ref={folderInput}
+          type="file"
+          multiple
+          hidden
+          {...{ webkitdirectory: '' }}
+          onChange={(event) => {
+            onFiles(collectFromPicker([...(event.target.files ?? [])]), true)
             event.target.value = ''
           }}
         />

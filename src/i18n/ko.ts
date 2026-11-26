@@ -14,6 +14,7 @@ export const ko: Record<MessageKey, string> = {
 
   // --- 끌어놓기 영역 ---
   'drop.title': 'trainer_state.json 파일을 여기에 끌어놓으세요',
+  'drop.browseFolder': '폴더 선택',
   'drop.or': '또는',
   'drop.browse': '파일 선택',
   'drop.samples': '샘플 실행 불러오기',
@@ -54,6 +55,8 @@ export const ko: Record<MessageKey, string> = {
   'runs.status.warn': '주의',
   'runs.status.ok': '정상',
   'runs.parseError': '파일을 읽지 못했습니다: {file}',
+  'runs.parseError.no_state_in_folder':
+    '그 폴더에서 trainer_state.json 을 찾지 못했습니다. 학습 출력 폴더나 checkpoint-* 폴더를 골라 주세요.',
   'runs.parseError.invalid_json': 'JSON 형식이 올바르지 않습니다. 파일이 잘렸을 수 있으니 다시 내려받거나 다시 복사해 보세요.',
   'runs.parseError.no_log_history':
     '"log_history" 배열이 없습니다. Hugging Face Trainer 가 저장한 trainer_state.json 파일이 필요합니다.',
