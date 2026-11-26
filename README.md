@@ -35,13 +35,13 @@ npm run dev
 
 Open the printed address (by default `http://localhost:5173`), open **Practice samples**, and press **Load sample runs**. No key, GPU or network is needed.
 
-Or drop your own file: a `trainer_state.json` lives in the output folder of a run and in every `checkpoint-*` folder.
+Or drop your own file: a `trainer_state.json` lives in the output folder of a run and in every `checkpoint-*` folder. You can also drop a whole output folder (or use **Choose folder**): only files named `trainer_state.json` are read, and each run is named by its folder path such as `run-a/checkpoint-500`.
 
 ## Using it
 
 | Control | What it does |
 |---|---|
-| Drop zone / **Choose files** | Reads files in the browser. Checkpoint files of one training are merged by step; different runs are overlaid. |
+| Drop zone / **Choose files** / **Choose folder** | Reads files in the browser (a folder is searched for `trainer_state.json` only). Checkpoint files of one training are merged by step; different runs are overlaid. |
 | **Load sample runs**, **Practice samples** list | Adds bundled practice files (see below). |
 | Run list | Colour, name, status and file count per run; the checkbox hides a run in the chart. |
 | Metrics checkboxes | Only keys the loaded files contain are offered (`loss`, `eval_loss`, `grad_norm`, `learning_rate`, `rewards/margins`, ...). |
@@ -220,6 +220,7 @@ Check each project's own documentation for what it supports today.
 |---|---|---|
 | `npm test` fails right away on Node 20 | vitest 5.1.0 needs Node `^22.12.0`, `^24.0.0` or `>=26.0.0` | switch Node (`nvm install 24`) and run `npm install` again |
 | "Could not read <file>" card | the file is not a trainer state (cut-off or wrong JSON) | check that it is a whole `trainer_state.json`; other files keep working |
+| "No trainer_state.json was found in that folder." | the chosen folder has no file named exactly `trainer_state.json` | pick the training output folder or a `checkpoint-*` folder |
 | A metric is missing from the checkboxes | the file has no such key | only keys in `log_history` are offered |
 | "Copy failed" | the browser blocks clipboard access | select the text in the export box and copy by hand, or use **Download** |
 | "Could not create the PNG. Try another browser or take a screenshot." | the browser could not export the chart canvas | try another browser, or take a screenshot of the chart |
@@ -229,7 +230,7 @@ Check each project's own documentation for what it supports today.
 
 ```bash
 npm install
-npm test            # vitest, 15 files, 123 tests
+npm test            # vitest, 16 files, 129 tests
 npm run typecheck   # tsc, including tests
 npm run build       # tsc -b && vite build, output in dist/
 npm run lint        # oxlint

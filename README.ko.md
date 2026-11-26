@@ -35,13 +35,13 @@ npm run dev
 
 출력된 주소(기본 `http://localhost:5173`)를 열고 **연습용 샘플**(Practice samples)을 펼쳐 **샘플 실행 불러오기**(Load sample runs)를 누르세요. 키·GPU·네트워크가 필요 없습니다.
 
-자기 파일을 쓰려면 `trainer_state.json` 을 끌어다 놓으세요. 학습 출력 폴더와 모든 `checkpoint-*` 폴더 안에 있습니다.
+자기 파일을 쓰려면 `trainer_state.json` 을 끌어다 놓으세요. 학습 출력 폴더와 모든 `checkpoint-*` 폴더 안에 있습니다. 출력 폴더를 통째로 끌어놓거나 **폴더 선택**을 써도 됩니다. 이름이 `trainer_state.json` 인 파일만 읽고, 실행 이름은 `run-a/checkpoint-500` 처럼 폴더 경로로 붙습니다.
 
 ## 사용법
 
 | 조작 | 하는 일 |
 |---|---|
-| 끌어놓기 영역 / **파일 선택** | 브라우저 안에서 파일을 읽습니다. 같은 학습의 체크포인트 파일은 step 기준으로 합치고, 다른 실행은 겹쳐 보여 줍니다. |
+| 끌어놓기 영역 / **파일 선택** / **폴더 선택** | 브라우저 안에서 파일을 읽습니다(폴더는 `trainer_state.json` 만 찾습니다). 같은 학습의 체크포인트 파일은 step 기준으로 합치고, 다른 실행은 겹쳐 보여 줍니다. |
 | **샘플 실행 불러오기**, **연습용 샘플** 목록 | 내장 연습 파일을 추가합니다(아래 참고). |
 | 실행 목록 | 실행마다 색·이름·상태·파일 수. 체크박스로 차트에서 숨깁니다. |
 | 지표 체크박스 | 불러온 파일에 있는 키만 나옵니다(`loss`, `eval_loss`, `grad_norm`, `learning_rate`, `rewards/margins` 등). |
@@ -220,6 +220,7 @@ flowchart LR
 |---|---|---|
 | Node 20 에서 `npm test` 가 바로 실패 | vitest 5.1.0 은 Node `^22.12.0`, `^24.0.0`, `>=26.0.0` 이 필요 | Node 를 바꾸고(`nvm install 24`) `npm install` 다시 실행 |
 | "Could not read <파일>" 카드(파일을 읽지 못함) | 학습 상태 파일이 아님(잘렸거나 다른 JSON) | 완전한 `trainer_state.json` 인지 확인. 다른 파일은 계속 동작 |
+| "그 폴더에서 trainer_state.json 을 찾지 못했습니다." | 고른 폴더에 이름이 정확히 `trainer_state.json` 인 파일이 없음 | 학습 출력 폴더나 `checkpoint-*` 폴더를 고르세요 |
 | 지표 체크박스에 어떤 지표가 없음 | 파일에 그 키가 없음 | `log_history` 에 있는 키만 나옴 |
 | "Copy failed"(복사 실패) | 브라우저가 클립보드를 막음 | 내보내기 상자의 글을 선택해 직접 복사하거나 **내려받기** 사용 |
 | "PNG 를 만들지 못했습니다"(Could not create the PNG) | 브라우저가 차트 캔버스를 내보내지 못함 | 다른 브라우저를 쓰거나 차트를 화면 캡처 |
@@ -229,7 +230,7 @@ flowchart LR
 
 ```bash
 npm install
-npm test            # vitest, 15개 파일, 123개 테스트
+npm test            # vitest, 16개 파일, 129개 테스트
 npm run typecheck   # tsc (테스트 포함)
 npm run build       # tsc -b && vite build, 결과는 dist/
 npm run lint        # oxlint
