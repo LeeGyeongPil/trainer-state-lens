@@ -3,6 +3,14 @@
 All notable changes to this project are documented here.
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and the project uses [Semantic Versioning](https://semver.org/).
 
+## [Unreleased]
+
+## [0.3.0] - 2026-11-26
+
+### Added
+
+- Drop a whole training output folder, or use **Choose folder**: only files named exactly `trainer_state.json` are opened (weights and other files are never read) and each run is named by its folder path such as `run-a/checkpoint-500`. Single files keep their file name. A folder without any `trainer_state.json` shows a short notice (English and Korean).
+
 ## [0.2.0] - 2026-11-14
 
 ### Added
